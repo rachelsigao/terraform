@@ -1,15 +1,15 @@
 resource "aws_instance" "roboshop" {
-  ami           = "ami-0220d79f3f480ecf5"
+  ami           = data.aws_ami.joindevops.id
   instance_type = "t3.micro"
-  #vpc_security_group_ids = [ aws_security_group.allow_all.id ]
-  vpc_security_group_ids = local.sg_id  
+  vpc_security_group_ids = [ aws_security_group.allow_all.id ]
+  
   tags = {
     Name = "HelloWorld"
   }
 }
 
 resource "aws_security_group" "allow_all" {
-    name        = "allow_all_change"
+    name        = "allow_all"
     description = "allow all traffic"
 
     ingress {
@@ -27,10 +27,6 @@ resource "aws_security_group" "allow_all" {
         ipv6_cidr_blocks = ["::/0"]
     }
 
-    # lifecycle {
-    #   create_before_destroy = true
-    # }
-    
     tags = {
         Name = "allow-all"
     }

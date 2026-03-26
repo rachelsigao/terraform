@@ -4,12 +4,12 @@ resource "aws_instance" "roboshop" {
     
     ami = var.ami_id # left and right side names no need to be same
     
-    # instance_type = each.value (when the variable is a map)
+    # instance_type = each.value (when the variable is a map, each.value will give you the value of the map (t3.micro, t3.micro, t3.small, t3.micro))
     instance_type = "t3.micro" # when the variable is a list 
         vpc_security_group_ids = [ aws_security_group.allow_all.id ]
     
 tags = {
-    Name = each.key
+    Name = each.key # when the variable is a map, each.key will give you the key of the map (mongodb, redis, mysql, rabbitmq)
   }
 }
 
